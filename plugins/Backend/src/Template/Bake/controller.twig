@@ -1,0 +1,64 @@
+<?php
+
+namespace Backend\Controller;
+
+use Backend\Base\BackendController;
+use Backend\Utility\Utils;
+use Cake\Core\Configure;
+
+class {{pluralName}}Controller extends BackendController {
+
+    public $indexConfig = [
+        'contains' => '{{contains}}',
+        'limit' => {{limit}},
+        'finder' => '{{finder}}',
+        'fields' => [
+            {% for nameField,option in indexField%}
+            '{{nameField}}' => [
+                        'label' => '{{option.label}}',
+                    {% if not(option.format is empty) %}
+                        'format' => '{{option.format}}',
+                    {% endif %}
+                ],
+            {% endfor %}
+        ]
+    ];
+    {% if not(submitField is empty) %}
+    protected $fieldsSubmit = [
+        {% for nameField,option in submitField %}
+            '{{nameField}}' => [
+                    'label' => '{{option.label}}',
+                    'type' => '{{option.type}}',
+                    {% if not(option.require is empty) %}
+                        'require' => 'true',
+                    {% endif %}
+                ],
+        {% endfor %}
+    ];
+    {% endif %}
+    {% if not(multiLangField is empty) %}
+    protected $multiLangFieldSubmit = [
+        {% for nameField,option in multiLangField %}
+            '{{nameField}}' => [
+                    'label' => '{{option.label}}',
+                    'type' => '{{option.type}}',
+                    {% if not(option.require is empty) %}
+                        'require' => 'true',
+                    {% endif %}
+                ],
+        {% endfor %}
+    ];
+    {% endif %}
+     
+    {% if not(contains is empty) %}
+    protected function prepareObject($id) {
+        $entityModel = $this->{{pluralName}}->get($id, [
+            'contain' => [
+                '{{contains}}'
+            ]
+        ]);
+        return $entityModel;
+    }
+    {% endif %}
+
+}

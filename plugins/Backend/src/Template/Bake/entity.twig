@@ -1,0 +1,36 @@
+{% if template == 'singleLang' and not(multiLangField is empty) %}
+<?php
+
+namespace Backend\Model\Entity;
+
+use Cake\ORM\Entity;
+use Backend\Base\Entity\EntityTranslate;
+
+class {{singleName}} extends EntityTranslate {
+
+    public $multiLangField = [
+        {% for nameField,option in multiLangField %}
+            {% if option.type == "text" or option.type == "textarea" or option.type == "editor" %}
+           '{{nameField}}',
+            {% endif %}
+        {% endfor %}
+    ];
+
+}
+{% else %}
+<?php
+
+namespace Backend\Model\Entity;
+
+use Cake\ORM\Entity;
+
+class {{singleName}} extends Entity {
+
+    protected $_accessible = [
+        '*' => true,
+        'id' => false,
+    ];
+
+
+}
+{% endif %}

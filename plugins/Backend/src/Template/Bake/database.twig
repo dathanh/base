@@ -1,0 +1,64 @@
+<?php
+use Migrations\AbstractMigration;
+
+class Create{{pluralName}} extends AbstractMigration
+{
+    /**
+     * Change Method.
+     *
+     * More information on this method is available here:
+     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     * @return void
+     */
+    public function change()
+    {
+        $table = $this->table('{{underPName}}');
+        
+        {% if not(data is empty) %}
+            {% for nameField,option in data %}
+                
+                    {% set type = 'string' %}
+                    {% set limit = '500' %}
+                    {% set default = 'null' %}
+                {% if option.type == "number" %}
+                        {% set type = 'integer' %}
+                        {% set limit = '11' %}
+                        {% set default = '0' %}
+                {% elseif option.type == "checkbox" %}
+                        {% set type = 'integer' %}
+                        {% set limit = '10' %}
+                        {% set default = '0' %}
+                {% elseif option.type == "textarea" %}
+                        {% set type = 'string' %}
+                        {% set limit = '2000' %}
+                        {% set default = 'null' %}
+                {% elseif option.type == "editor" or option.type == "multiple_image"  %}
+                        {% set type = 'text' %}
+                        {% set limit = '' %}
+                        {% set default = 'null' %}
+                {% else %}
+                    {% set type = 'string' %}
+                    {% set limit = '500' %}
+                    {% set default = 'null' %}
+                {% endif %}
+                
+            $table->addColumn('{{nameField}}', '{{type}}', [
+                'default' => {{default}},
+                {% if not(limit is empty) %}
+                'limit' => {{limit}},
+                {% endif %}
+                'null' => true,
+            ]);
+            {% endfor %}
+            $table->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ]);
+            $table->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ]);
+        {% endif %}
+        $table->create();
+    }
+}

@@ -1,0 +1,104 @@
+<?php
+
+namespace Backend\Model\Table;
+
+use Cake\ORM\Entity;
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
+use Cake\Validation\Validation;
+use Cake\Event\Event;
+use Backend\Model\Entity\{{singleName}};
+use Sluggable\Utility\Slug;
+use App\Utility\Utils;
+
+class {{pluralName}}Table extends Table {
+
+    public function initialize(array $config) {
+        parent::initialize($config);
+
+        $this->setTable('{{underPName}}');
+        $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
+
+    }
+
+    public function validationDefault(Validator $validator) {
+        $validator
+                ->integer('id')
+                ->allowEmpty('id', 'create');
+        {% if not(data is empty) %}
+            {% for nameField,option in data %}
+                {% if option.require == "true" %}
+                $validator ->requirePresence('{{nameField}}', 'create')
+                            {% if option.type == "number" %}
+                                ->integer('{{nameField}}', 'create')
+                                ->integer('{{nameField}}', 'update')
+                            {% endif %}
+                            ->notEmpty('{{nameField}}','','create');
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        return $validator;
+    }
+
+    public function beforeMarshal(Event $event, $data) {
+        {% if not(data is empty) %}
+            {% for nameField,option in data %}
+                if (isset($data['{{nameField}}']) && empty($data['{{nameField}}'])) {
+                         unset($data['{{nameField}}']);
+                }
+            {% endfor %}
+        {% endif %}
+    }
+    {% if isMultiLang == "true" %}
+    public function find{{singleName}}ByTitle(Query $query, array $options) {
+        if (empty($options['title'])) {
+            return $query;
+        }
+        $title = $options['title'];
+        Utils::useTables($this, ['Backend.{{singleName}}Translates']);
+        ${{underSName}}Translate = $this->{{singleName}}Translates->find('list', [
+                    'conditions' => [
+                        'OR' => [
+                            {% if not(multiLangField is empty) %}
+                                {% for nameField,option in multiLangField %}
+                                    {% if option.type == "text" or option.type == "textarea" or option.type == "editor" %}
+                                        ['{{singleName}}Translates.{{nameField}} LIKE' => '%' . $title . '%'],
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        ]
+                    ],
+                    'keyField' => 'id',
+                    'valueField' => '{{underSName}}_id'
+                ])->toArray();
+        if (!empty(${{underSName}}Translate)) {
+            ${{underSName}}Translate = array_unique(${{underSName}}Translate);
+            return $query->where(['{{pluralName}}.id IN' => ${{underSName}}Translate]);
+        } else {
+            return $query->where(['{{pluralName}}.id' => '#']);
+        }
+    }
+    {% else %}
+    public function find{{singleName}}ByTitle(Query $query, array $options) {
+        if (empty($options['title'])) {
+            return $query;
+        }
+        $title = $options['title'];
+        return $query->where(['OR' => [
+                {% if not(data is empty) %}
+                    {% for nameField,option in data %}
+                        {% if option.type == "text" or option.type == "textarea" or option.type == "editor" %}
+                           ['{{pluralName}}.{{nameField}} LIKE' => '%' . $title . '%'],
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+        ]]);
+    }
+    {% endif %}
+
+}
