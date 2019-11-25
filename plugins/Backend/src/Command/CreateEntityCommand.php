@@ -24,7 +24,7 @@ class CreateEntityCommand extends Command {
     }
 
     public function execute(Arguments $args, ConsoleIo $io) {
-        $dirFolder = Plugin::path('Backend') . 'src/Model/Entity/Test/';
+        $dirFolder = Plugin::path('Backend') . 'src/Model/Entity/';
         $listController = $this->getListConfig($args);
         if (!empty($listController)) {
             foreach ($listController as $name => $option) {

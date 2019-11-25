@@ -61,21 +61,39 @@ return [
             'finder' => 'careerByTitle',
             'fields' => [
                 'status' => [
-                    'label' => 'Name',
+                    'label' => 'Active',
                     'type' => 'checkbox',
-                    'require' => true,
+                    'require' => false,
                     'isIndex' => true,
                     'isView' => true,
-                    'isMultiLang' => true,
+                    'isMultiLang' => false,
                     'format' => ''
                 ],
-                'location' => [
-                    'label' => 'location new',
+                'name' => [
+                    'label' => 'Name',
                     'type' => 'text',
                     'require' => true,
                     'isIndex' => true,
                     'isView' => true,
-                    'isMultiLang' => true,
+                    'isMultiLang' => false,
+                    'format' => ''
+                ],
+                'email' => [
+                    'label' => 'Email',
+                    'type' => 'text',
+                    'require' => true,
+                    'isIndex' => true,
+                    'isView' => true,
+                    'isMultiLang' => false,
+                    'format' => ''
+                ],
+                'note' => [
+                    'label' => 'Note',
+                    'type' => 'text',
+                    'require' => false,
+                    'isIndex' => true,
+                    'isView' => true,
+                    'isMultiLang' => false,
                     'format' => ''
                 ],
             ]
@@ -96,26 +114,26 @@ return [
                     'isMultiLang' => false,
                     'format' => ''
                 ],
-                'location' => [
-                    'label' => 'location new',
+                'info' => [
+                    'label' => 'Infomation',
                     'type' => 'text',
-                    'require' => true,
+                    'require' => false,
                     'isIndex' => true,
                     'isView' => true,
                     'isMultiLang' => false,
                     'format' => ''
                 ],
                 'name' => [
-                    'label' => 'Name fb',
+                    'label' => 'Name',
                     'type' => 'text',
                     'require' => true,
-                    'isIndex' => true,
+                    'isIndex' => false,
                     'isView' => true,
                     'isMultiLang' => false,
                     'format' => ''
                 ],
                 'thumbnail' => [
-                    'label' => 'thumbnail new',
+                    'label' => 'Thumbnail',
                     'type' => 'image',
                     'require' => true,
                     'isIndex' => false,

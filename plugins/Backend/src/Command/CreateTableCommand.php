@@ -24,7 +24,7 @@ class CreateTableCommand extends Command {
     }
 
     public function execute(Arguments $args, ConsoleIo $io) {
-        $dirFolder = Plugin::path('Backend') . 'src/Model/Table/Test/';
+        $dirFolder = Plugin::path('Backend') . 'src/Model/Table/';
 
         $listController = $this->getListConfig($args);
         if (!empty($listController)) {

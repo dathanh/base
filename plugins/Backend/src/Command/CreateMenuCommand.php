@@ -16,7 +16,7 @@ class CreateMenuCommand extends Command {
     use CommandService;
 
     public function execute(Arguments $args, ConsoleIo $io) {
-        $filename = Plugin::path('Backend') . 'config/Test/left_menu.php';
+        $filename = Plugin::path('Backend') . 'config/left_menu.php';
         $data['data'] = array_keys(Configure::read('Controller'));
         $this->createTemplate($data, 'left_menu', $filename);
 

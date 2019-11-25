@@ -26,7 +26,7 @@ class CreateControllerCommand extends Command {
         $listController = $this->getListConfig($args);
         if (!empty($listController)) {
             foreach ($listController as $name => $option) {
-                $filename = Plugin::path('Backend') . 'src/Controller/Test/' . $name . 'Controller.php';
+                $filename = Plugin::path('Backend') . 'src/Controller/' . $name . 'Controller.php';
                 $parseConfig = $this->parseFromConfig($option, $name);
                 $this->createTemplate($parseConfig, 'controller', $filename);
 

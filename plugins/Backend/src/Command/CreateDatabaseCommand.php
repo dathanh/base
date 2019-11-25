@@ -24,7 +24,7 @@ class CreateDatabaseCommand extends Command {
     }
 
     public function execute(Arguments $args, ConsoleIo $io) {
-        $pathMigrate = CONFIG . 'Migrations/Test/';
+        $pathMigrate = CONFIG . 'Migrations/';
         $listController = $this->getListConfig($args);
         if (!empty($listController)) {
             foreach ($listController as $name => $option) {
