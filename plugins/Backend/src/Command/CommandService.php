@@ -13,19 +13,16 @@ trait CommandService {
         $indexField = [];
         $submitField = [];
         $multiLangField = [];
+        $imageField = [];
+        $imageMultiLangField = [];
+        $isUpload = false;
         foreach ($option['fields'] as $nameField => $optionField) {
             //create index field
             if (!empty($optionField['isIndex']) && $optionField['isIndex']) {
-                $indexField[$nameField]['name'] = $nameField;
-                $indexField[$nameField] = [
-                    'label' => $optionField['label']
-                ];
-                if (!empty($optionField['format'])) {
-                    $indexField[$nameField]['format'] = $optionField['format'];
-                }
-                if ($optionField['type'] == 'checkbox') {
-                    $indexField[$nameField]['render'] = 'switch';
-                }
+                $indexField[$nameField] = $optionField;
+                unset($submitField[$nameField]['isIndex']);
+                unset($submitField[$nameField]['isView']);
+                unset($submitField[$nameField]['isMultiLang']);
             }
             //create submit field
             if (empty($optionField['isMultiLang']) || !$optionField['isMultiLang']) {
@@ -34,12 +31,28 @@ trait CommandService {
                 unset($submitField[$nameField]['isView']);
                 unset($submitField[$nameField]['isMultiLang']);
             }
-            //create multi languaue field
+            //create multi language field
             if (!empty($optionField) && $optionField['isMultiLang']) {
                 $multiLangField[$nameField] = $optionField;
                 unset($multiLangField[$nameField]['isIndex']);
                 unset($multiLangField[$nameField]['isView']);
                 unset($multiLangField[$nameField]['isMultiLang']);
+                if (!empty($optionField) && $optionField['type'] == 'image') {
+                    $isUpload = true;
+                    $imageMultiLangField[$nameField] = $optionField;
+                    unset($imageMultiLangField[$nameField]['isIndex']);
+                    unset($imageMultiLangField[$nameField]['isView']);
+                    unset($imageMultiLangField[$nameField]['isMultiLang']);
+                }
+            }
+
+            //create image field
+            if (!empty($optionField) && $optionField['type'] == 'image') {
+                $isUpload = true;
+                $imageField[$nameField] = $optionField;
+                unset($imageField[$nameField]['isIndex']);
+                unset($imageField[$nameField]['isView']);
+                unset($imageField[$nameField]['isMultiLang']);
             }
         }
 
@@ -50,6 +63,9 @@ trait CommandService {
             'indexField' => $indexField,
             'submitField' => $submitField,
             'multiLangField' => $multiLangField,
+            'imageField' => $imageField,
+            'isUpload' => $isUpload,
+            'imageMultiLangField' => $imageMultiLangField,
             'isMultiLang' => !empty($multiLangField),
             'pluralName' => $name,
             'singleName' => Inflector::singularize($name),

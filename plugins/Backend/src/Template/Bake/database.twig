@@ -50,6 +50,20 @@ class Create{{pluralName}} extends AbstractMigration
                 'null' => true,
             ]);
             {% endfor %}
+            {% if template == 'multiLang' and not(multiLangField is empty) %}
+                $table->addColumn('language_code', 'string', [
+                    'default' => null,
+                    'limit' => 5,
+                    'null' => false,
+                 ]);    
+                $table->addColumn('{{underSName}}_id', 'integer', [
+                    'default' => 0,
+                    'limit' => 10,
+                    'null' => false,        
+                ]);
+            {% endif %}
+            
+            
             $table->addColumn('created', 'datetime', [
                 'default' => null,
                 'null' => false,

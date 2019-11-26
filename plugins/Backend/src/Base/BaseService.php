@@ -4,6 +4,7 @@ namespace Backend\Base;
 
 use Backend\Utility\Utils;
 use Cake\Core\Configure;
+use Cake\Utility\Inflector;
 
 trait BaseService {
 

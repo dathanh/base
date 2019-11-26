@@ -31,7 +31,7 @@ class CreateDatabaseCommand extends Command {
                 $parseConfig = $this->parseFromConfig($option, $name);
                 $filename = $pathMigrate . date('Ymdhi') . mt_rand(10, 99) . "_Create$name" . '.php';
                 $parseConfig['data'] = $parseConfig['submitField'];
-
+                $parseConfig['template'] = 'singleLang';
                 $this->createTemplate($parseConfig, 'database', $filename);
 
                 $io->out("Creare $name  Done");
@@ -41,7 +41,9 @@ class CreateDatabaseCommand extends Command {
 
                     $filename = $pathMigrate . date('Ymdhi') . mt_rand(10, 99) . "_Create" . $parseConfig ['singleName'] . 'Translates.php';
                     $parseConfig['data'] = $parseConfig['multiLangField'];
+                    $parseConfig['pluralName'] = $parseConfig['singleName'] . 'Translates';
                     $parseConfig['underPName'] = $parseConfig['underSName'] . '_translates';
+                    $parseConfig['template'] = 'multiLang';
 
                     $this->createTemplate($parseConfig, 'database', $filename);
                     $io->out("Create " . $parseConfig ['singleName'] . 'Translate Done');

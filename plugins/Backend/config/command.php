@@ -56,7 +56,7 @@ return [
         'Contacts' => [
             'customHeader' => '',
             'customAction' => '',
-            'contains' => 'ContacxtTranslates',
+            'contains' => 'ContactTranslates',
             'limit' => 30,
             'finder' => 'careerByTitle',
             'fields' => [

@@ -22,6 +22,18 @@ class {{pluralName}}Table extends Table {
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        {% if template == 'singleLang' and not(multiLangField is empty) %}
+            $this->hasMany('{{transName}}', [
+                'foreignKey' => '{{underSName}}_id',
+                'className' => 'Backend.{{transName}}'
+        ]);
+        {% endif %}
+        {% if template == 'multiLang' and not(multiLangField is empty) %}
+           $this->belongsTo('{{transName}}', [
+                'foreignKey' => '{{underSName}}_id',
+                'className' => 'Backend.{{transName}}'
+            ]);
+        {% endif %}
 
     }
 

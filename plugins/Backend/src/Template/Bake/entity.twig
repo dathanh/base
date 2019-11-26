@@ -5,6 +5,7 @@ namespace Backend\Model\Entity;
 
 use Cake\ORM\Entity;
 use Backend\Base\Entity\EntityTranslate;
+use Cake\Core\Configure;
 
 class {{singleName}} extends EntityTranslate {
 
@@ -15,6 +16,21 @@ class {{singleName}} extends EntityTranslate {
             {% endif %}
         {% endfor %}
     ];
+    
+    {% if not(imageField is empty) %}
+    protected $_virtual = [
+        {% for nameField,option in imageField %}
+           '{{nameField}}',
+        {% endfor %}
+    ];
+    {% endif %}
+    {% if not(imageField is empty) %}
+        {% for nameField,option in imageField %}
+        protected function _getLink{{nameField}}() {
+            return Configure::read('LinkStatic.UploadFolder') . '{{pluralName}}/' . $this->{{nameField}};
+        }
+        {% endfor %}
+    {% endif %}
 
 }
 {% else %}
@@ -23,6 +39,7 @@ class {{singleName}} extends EntityTranslate {
 namespace Backend\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Core\Configure;
 
 class {{singleName}} extends Entity {
 
@@ -30,7 +47,21 @@ class {{singleName}} extends Entity {
         '*' => true,
         'id' => false,
     ];
-
-
+    {% if not(imageField is empty) %}
+    protected $_virtual = [
+        {% for nameField,option in imageField %}
+           'link{{nameField|capitalize}}',
+        {% endfor %}
+    ];
+    {% endif %}
+    {% if not(imageField is empty) %}
+        {% for nameField,option in imageField %}
+        protected function _getLink{{nameField|capitalize}}() {
+            return Configure::read('LinkStatic.UploadFolder') . '{{pluralName}}/' . $this->{{nameField}};
+        }
+        {% endfor %}
+    {% endif %}
+    
+  
 }
 {% endif %}

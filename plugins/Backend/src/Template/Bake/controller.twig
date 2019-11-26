@@ -7,7 +7,9 @@ use Backend\Utility\Utils;
 use Cake\Core\Configure;
 
 class {{pluralName}}Controller extends BackendController {
-
+    {% if isUpload %}
+    use \Backend\Base\BaseService;
+    {% endif %}
     public $indexConfig = [
         'contains' => '{{contains}}',
         'limit' => {{limit}},
@@ -17,7 +19,10 @@ class {{pluralName}}Controller extends BackendController {
             '{{nameField}}' => [
                         'label' => '{{option.label}}',
                     {% if not(option.format is empty) %}
-                        'format' => '{{option.format}}',
+                        'format' => '{{option.format|raw}}',
+                    {% endif %}
+                    {% if option.type == 'checkbox' %}
+                        'render' => 'switch',
                     {% endif %}
                 ],
             {% endfor %}
@@ -32,6 +37,9 @@ class {{pluralName}}Controller extends BackendController {
                     {% if not(option.require is empty) %}
                         'require' => 'true',
                     {% endif %}
+                    {% if option.type == 'image' %}
+                        'format' => 'link{{nameField | capitalize}}',
+                    {% endif %}
                 ],
         {% endfor %}
     ];
@@ -44,6 +52,9 @@ class {{pluralName}}Controller extends BackendController {
                     'type' => '{{option.type}}',
                     {% if not(option.require is empty) %}
                         'require' => 'true',
+                    {% endif %}
+                    {% if option.type == 'image' %}
+                        'format' => 'link{{nameField | capitalize}}',
                     {% endif %}
                 ],
         {% endfor %}

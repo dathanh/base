@@ -31,6 +31,8 @@ class CreateTableCommand extends Command {
             foreach ($listController as $name => $option) {
                 $parseConfig = $this->parseFromConfig($option, $name);
                 $parseConfig['data'] = $parseConfig['submitField'];
+                $parseConfig['template'] = 'singleLang';
+                $parseConfig['transName'] = $parseConfig['singleName'] . 'Translates';
                 $filename = $dirFolder . $name . 'Table.php';
 
                 $this->createTemplate($parseConfig, 'table', $filename);
@@ -40,6 +42,10 @@ class CreateTableCommand extends Command {
                 if (!empty($parseConfig ['multiLangField'])) {
                     $filename = $dirFolder . $parseConfig['singleName'] . 'TranslatesTable.php';
                     $parseConfig['data'] = $parseConfig['multiLangField'];
+                    $parseConfig['underPName'] = $parseConfig['underSName'] . '_translates';
+                    $parseConfig['template'] = 'multiLang';
+                    $parseConfig['transName'] = $parseConfig['pluralName'];
+                    $parseConfig['pluralName'] = $parseConfig['singleName'] . 'Translates';
                     $this->createTemplate($parseConfig, 'table', $filename);
                     $io->out("Creare " . $parseConfig ['singleName'] . 'TranslatesTable Done');
                 }

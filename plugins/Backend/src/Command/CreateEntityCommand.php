@@ -41,6 +41,7 @@ class CreateEntityCommand extends Command {
                 if (!empty($parseConfig ['multiLangField'])) {
                     $filename = $dirFolder . $parseConfig['singleName'] . 'Translate.php';
                     $parseConfig['data'] = $parseConfig['multiLangField'];
+                    $parseConfig['imageField'] = $parseConfig['imageMultiLangField'];
                     $parseConfig['singleName'] = $parseConfig['singleName'] . 'Translate';
                     $parseConfig['template'] = 'multiLang';
 
