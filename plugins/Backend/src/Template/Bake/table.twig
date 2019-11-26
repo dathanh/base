@@ -67,7 +67,7 @@ class {{pluralName}}Table extends Table {
         {% endif %}
     }
     {% if isMultiLang == "true" %}
-    public function find{{singleName}}ByTitle(Query $query, array $options) {
+    public function find{{singleName}}ByString(Query $query, array $options) {
         if (empty($options['title'])) {
             return $query;
         }
@@ -96,7 +96,7 @@ class {{pluralName}}Table extends Table {
         }
     }
     {% else %}
-    public function find{{singleName}}ByTitle(Query $query, array $options) {
+    public function find{{singleName}}ByString(Query $query, array $options) {
         if (empty($options['title'])) {
             return $query;
         }

@@ -24,6 +24,8 @@ class ContentHelper extends Helper {
     public function customFiledBackend($type, $value, $name) {
         $dirElement = 'Backend.Element/CustomIndex/';
         $view = new \Cake\View\View();
+        $view->loadHelper('Backend.Cf');
+        $view->loadHelper('Url');
         $view->setLayout(false);
         $view->set(compact('value', 'name'));
 
@@ -33,6 +35,9 @@ class ContentHelper extends Helper {
                 break;
             case 'switch':
                 $html = $view->render($dirElement . 'switch');
+                break;
+            case 'image':
+                $html = $view->render($dirElement . 'image');
                 break;
             default :
                 $html = '';

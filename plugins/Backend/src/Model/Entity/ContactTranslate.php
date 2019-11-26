@@ -11,12 +11,5 @@ class ContactTranslate extends Entity {
         '*' => true,
         'id' => false,
     ];
-    protected $_virtual = [
-        'linkBanner',
-    ];
-
-    protected function _getLinkBanner() {
-        return Configure::read('LinkStatic.UploadFolder') . 'Contacts/' . $this->banner;
-    }
 
 }

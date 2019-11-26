@@ -11,7 +11,7 @@ class {{singleName}} extends EntityTranslate {
 
     public $multiLangField = [
         {% for nameField,option in multiLangField %}
-            {% if option.type == "text" or option.type == "textarea" or option.type == "editor" %}
+            {% if option.type == "text" or option.type == "textarea" or option.type == "editor" or option.type == "image" %}
            '{{nameField}}',
             {% endif %}
         {% endfor %}

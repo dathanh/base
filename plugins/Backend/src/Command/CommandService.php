@@ -52,7 +52,6 @@ trait CommandService {
         return [
             'limit' => $option['limit'],
             'contains' => $option['contains'],
-            'finder' => $option['finder'],
             'indexField' => $indexField,
             'submitField' => $submitField,
             'multiLangField' => $multiLangField,

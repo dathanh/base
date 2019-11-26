@@ -58,7 +58,7 @@ class ContactsTable extends Table {
         }
     }
 
-    public function findContactByTitle(Query $query, array $options) {
+    public function findContactByString(Query $query, array $options) {
         if (empty($options['title'])) {
             return $query;
         }
@@ -76,7 +76,7 @@ class ContactsTable extends Table {
             $contactTranslate = array_unique($contactTranslate);
             return $query->where(['Contacts.id IN' => $contactTranslate]);
         } else {
-            return $query->where(['Contacts.id' => '0']);
+            return $query->where(['Contacts.id' => 0]);
         }
     }
 

@@ -9,13 +9,13 @@ use Cake\Core\Configure;
 class Contact extends EntityTranslate {
 
     public $multiLangField = [
-        'banner'
+        'banner',
     ];
-    public $imageMultiLangField = [
-        'banner'
-    ];
-    public $_virtual = [
+    protected $_virtual = [
         'linkThumbnail',
+    ];
+    protected $imageMultiLangField = [
+        'banner',
     ];
 
     protected function _getLinkThumbnail() {

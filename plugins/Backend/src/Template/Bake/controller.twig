@@ -13,7 +13,7 @@ class {{pluralName}}Controller extends BackendController {
     public $indexConfig = [
         'contains' => '{{contains}}',
         'limit' => {{limit}},
-        'finder' => '{{finder}}',
+        'finder' => '{{underSName}}ByString',
         'fields' => [
             {% for nameField,option in indexField%}
             '{{nameField}}' => [
@@ -23,6 +23,9 @@ class {{pluralName}}Controller extends BackendController {
                     {% endif %}
                     {% if option.type == 'checkbox' %}
                         'render' => 'switch',
+                    {% endif %}
+                    {% if option.type == 'image' %}
+                        'render' => 'image',
                     {% endif %}
                 ],
             {% endfor %}

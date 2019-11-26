@@ -22,27 +22,27 @@ class ContactTranslatesTable extends Table {
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-                           $this->belongsTo('Contacts', [
-                'foreignKey' => 'contact_id',
-                'className' => 'Backend.Contacts'
-            ]);
-        
+        $this->belongsTo('Contacts', [
+            'foreignKey' => 'contact_id',
+            'className' => 'Backend.Contacts'
+        ]);
     }
 
     public function validationDefault(Validator $validator) {
         $validator
                 ->integer('id')
                 ->allowEmpty('id', 'create');
-                                                        
+
         return $validator;
     }
 
     public function beforeMarshal(Event $event, $data) {
-                                    if (isset($data['banner']) && empty($data['banner'])) {
-                         unset($data['banner']);
-                }
-                        }
-        public function findContactByTitle(Query $query, array $options) {
+        if (isset($data['banner']) && empty($data['banner'])) {
+            unset($data['banner']);
+        }
+    }
+
+    public function findContactByString(Query $query, array $options) {
         if (empty($options['title'])) {
             return $query;
         }
@@ -51,7 +51,7 @@ class ContactTranslatesTable extends Table {
         $contactTranslate = $this->ContactTranslates->find('list', [
                     'conditions' => [
                         'OR' => [
-                                                                                                                                                                                    ]
+                        ]
                     ],
                     'keyField' => 'id',
                     'valueField' => 'contact_id'
@@ -60,8 +60,8 @@ class ContactTranslatesTable extends Table {
             $contactTranslate = array_unique($contactTranslate);
             return $query->where(['ContactTranslates.id IN' => $contactTranslate]);
         } else {
-            return $query->where(['ContactTranslates.id' => '#']);
+            return $query->where(['ContactTranslates.id' => 0]);
         }
     }
-    
+
 }

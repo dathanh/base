@@ -7,7 +7,6 @@ return [
             'customAction' => '',
             'contains' => 'CareerTranslates',
             'limit' => 30,
-            'finder' => 'careerByTitle',
             'fields' => [
                 'name' => [
                     'label' => 'Name',
@@ -74,7 +73,6 @@ return [
             'customAction' => '',
             'contains' => 'ContactTranslates',
             'limit' => 30,
-            'finder' => 'careerByTitle',
             'fields' => [
                 'status' => [
                     'label' => 'Active',
@@ -135,7 +133,6 @@ return [
             'customAction' => '',
             'contains' => '',
             'limit' => 30,
-            'finder' => 'feedbackByTitle',
             'fields' => [
                 'status' => [
                     'label' => 'Active',

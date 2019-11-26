@@ -53,7 +53,7 @@ class FeedbacksTable extends Table {
                          unset($data['thumbnail']);
                 }
                         }
-        public function findFeedbackByTitle(Query $query, array $options) {
+        public function findFeedbackByString(Query $query, array $options) {
         if (empty($options['title'])) {
             return $query;
         }

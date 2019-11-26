@@ -22,40 +22,40 @@ class CareerTranslatesTable extends Table {
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-        $this->belongsTo('Careers', [
-            'foreignKey' => 'career_id',
-            'className' => 'Backend.Careers'
-        ]);
+                           $this->belongsTo('Careers', [
+                'foreignKey' => 'career_id',
+                'className' => 'Backend.Careers'
+            ]);
+        
     }
 
     public function validationDefault(Validator $validator) {
         $validator
                 ->integer('id')
                 ->allowEmpty('id', 'create');
-        $validator->requirePresence('name', 'create')
-                ->notEmpty('name', '', 'create');
-        $validator->requirePresence('location', 'create')
-                ->notEmpty('location', '', 'create');
-
+                                                    $validator ->requirePresence('name', 'create')
+                                                        ->notEmpty('name','','create');
+                                                            $validator ->requirePresence('location', 'create')
+                                                        ->notEmpty('location','','create');
+                                                                                            
         return $validator;
     }
 
     public function beforeMarshal(Event $event, $data) {
-        if (isset($data['name']) && empty($data['name'])) {
-            unset($data['name']);
-        }
-        if (isset($data['location']) && empty($data['location'])) {
-            unset($data['location']);
-        }
-        if (isset($data['overview']) && empty($data['overview'])) {
-            unset($data['overview']);
-        }
-        if (isset($data['responsibility']) && empty($data['responsibility'])) {
-            unset($data['responsibility']);
-        }
-    }
-
-    public function findCareerByTitle(Query $query, array $options) {
+                                    if (isset($data['name']) && empty($data['name'])) {
+                         unset($data['name']);
+                }
+                            if (isset($data['location']) && empty($data['location'])) {
+                         unset($data['location']);
+                }
+                            if (isset($data['overview']) && empty($data['overview'])) {
+                         unset($data['overview']);
+                }
+                            if (isset($data['responsibility']) && empty($data['responsibility'])) {
+                         unset($data['responsibility']);
+                }
+                        }
+        public function findCareerByString(Query $query, array $options) {
         if (empty($options['title'])) {
             return $query;
         }
@@ -64,11 +64,11 @@ class CareerTranslatesTable extends Table {
         $careerTranslate = $this->CareerTranslates->find('list', [
                     'conditions' => [
                         'OR' => [
-                            ['CareerTranslates.name LIKE' => '%' . $title . '%'],
-                            ['CareerTranslates.location LIKE' => '%' . $title . '%'],
-                            ['CareerTranslates.overview LIKE' => '%' . $title . '%'],
-                            ['CareerTranslates.responsibility LIKE' => '%' . $title . '%'],
-                        ]
+                                                                                                                                        ['CareerTranslates.name LIKE' => '%' . $title . '%'],
+                                                                                                                                                ['CareerTranslates.location LIKE' => '%' . $title . '%'],
+                                                                                                                                                ['CareerTranslates.overview LIKE' => '%' . $title . '%'],
+                                                                                                                                                ['CareerTranslates.responsibility LIKE' => '%' . $title . '%'],
+                                                                                                                        ]
                     ],
                     'keyField' => 'id',
                     'valueField' => 'career_id'
@@ -77,8 +77,8 @@ class CareerTranslatesTable extends Table {
             $careerTranslate = array_unique($careerTranslate);
             return $query->where(['CareerTranslates.id IN' => $careerTranslate]);
         } else {
-            return $query->where(['CareerTranslates.id' => '#']);
+            return $query->where(['CareerTranslates.id' => 0]);
         }
     }
-
+    
 }
