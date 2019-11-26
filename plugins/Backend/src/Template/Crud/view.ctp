@@ -114,7 +114,51 @@ use Cake\Utility\Inflector;
                                                 <div class="tab-content pt-3">
                                                     <?php foreach ($listLanguage as $languageCode => $languageName) : ?>
                                                         <div class="tab-pane fade <?= $languageCode == $defaultLanguage ? 'active show' : '' ?>" id="<?= $languageCode . "-$field" ?>" role="tabpanel" aria-labelledby="base-<?= $languageCode . "-$field" ?>">
-                                                            <?= h($entityModel->lang[$languageCode][$field]) ?>
+                                                            <?php if ($input['type'] == 'checkbox'): ?>
+                                                                <?php if (!empty($entityModel->lang[$languageCode][$field])): ?>
+                                                                    <span class="badge-text badge-text-small info"><?= __('Yes') ?></span>
+                                                                <?php else : ?>
+                                                                    <span class="badge-text badge-text-small danger"><?= __('No') ?></span>
+                                                                <?php endif; ?>
+                                                            <?php elseif ($input['type'] == 'image'): ?>
+                                                                <?php $fieldTemp = !empty($input['format']) ? $input['format'] : '' ?>
+                                                                <?php if (!empty($fieldTemp)) : ?>
+                                                                    <?php $photo = $this->Cf->imageUrl(h($entityModel->lang[$languageCode][$fieldTemp])); ?>
+                                                                    <a href="<?php echo $photo; ?>" class="banner-link" style="display: block;">
+                                                                        <img src="<?php echo $photo; ?>" width="100" />
+                                                                    </a>
+                                                                <?php endif; ?>
+                                                            <?php elseif ($input['type'] == 'video'): ?>
+                                                                <?php $fieldTemp = !empty($input['format']) ? $input['format'] : '' ?>
+                                                                <?php if (!empty($fieldTemp)) : ?>
+                                                                    <?php $video = $this->Cf->imageUrl(h($entityModel->lang[$languageCode][$fieldTemp])); ?>
+                                                                    <a href="<?php echo $photo; ?>" class="banner-link" style="display: block;">
+                                                                        <video width="320" height="240" controls>
+                                                                            <source src="<?php echo $video; ?>" type="video/mp4" />
+                                                                        </video>
+                                                                    </a>
+                                                                <?php endif; ?>
+                                                            <?php elseif ($input['type'] == 'multiple_image'): ?>
+                                                                <?php $fieldTemp = !empty($input['format']) ? $input['format'] : '' ?>
+                                                                <?php if (!empty($fieldTemp)) : ?>
+
+                                                                <?php endif; ?>
+                                                            <?php else: ?>
+                                                                <?php if (!empty($input['format'])): ?>
+                                                                    <?php $fieldTemp = !empty($input['format']) ? $input['format'] : '' ?>
+                                                                    <td><?= $entityModel->lang[$languageCode][$fieldTemp] ?></td>
+                                                                <?php elseif (!empty($input['render'])): ?>
+                                                                    <?=
+                                                                    $this->element('/CustomView/' . $input['render'], ['entityModel' => $entityModel,
+                                                                        'field' => $field,
+                                                                        'fieldInfo' => $input,
+                                                                    ]);
+                                                                    ?>
+                                                                <?php else: ?>
+                                                                    <?= h($entityModel->lang[$languageCode][$field]) ?>
+                                                                <?php endif; ?>
+                                                            <?php endif; ?>
+
                                                         </div>
                                                     <?php endforeach; ?>
                                                 </div>

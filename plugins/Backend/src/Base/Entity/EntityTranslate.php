@@ -15,6 +15,12 @@ class EntityTranslate extends Entity {
     ];
     protected $_virtual = ['lang'];
     protected $multiLangField = [];
+    protected $imageMultiLangField = [];
+
+    public function __construct(array $properties = array(), array $options = array()) {
+        parent::__construct($properties, $options);
+        $this->setVirtual(['lang'], true);
+    }
 
     protected function _getLang() {
         $parseClass = explode("\\", static::class);
@@ -27,6 +33,9 @@ class EntityTranslate extends Entity {
             foreach ($this->$tableTranslate as $objectTranslate) {
                 foreach ($this->multiLangField as $field) {
                     $languageField[$objectTranslate->language_code][$field] = $objectTranslate->$field;
+                    if (in_array($field, $this->imageMultiLangField)) {
+                        $languageField[$objectTranslate->language_code]['link' . Inflector::camelize($field)] = Configure::read('LinkStatic.UploadFolder') . Inflector::pluralize($curClass) . '/' . $objectTranslate->$field;
+                    }
                 }
             }
             return $languageField;

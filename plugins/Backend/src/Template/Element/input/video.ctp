@@ -2,7 +2,7 @@
 
 use Cake\Utility\Inflector;
 
-$fieldLink = 'link' . Inflector::camelize($field);
+$fieldLink = 'link' . Inflector::camelize($nameField);
 ?>
 
 <div class="form-group row d-flex align-items-center mb-5">
@@ -10,18 +10,32 @@ $fieldLink = 'link' . Inflector::camelize($field);
         <?= $label ?><?= $require ? '<span style="margin-left:3px" class="text-danger">(*)</span>' : '' ?>
     </label>
     <div class="col-lg-10">
-        <?php if (!empty($entityModel->$fieldLink)): ?>
-            <?php $video = $this->Cf->imageUrl($entityModel->$fieldLink); ?>
-            <a  class="videoUpload" href="<?php echo $video; ?>" class="video-link" style="display: block; margin-bottom: 10px;">
-                <video width="320" height="240" controls>
-                    <source src="<?php echo $video; ?>" type="video/mp4" />
-                </video>
-            </a>
-            <input type="hidden" accept="video/*" name="<?= $field ?>" value="<?= $value ?>" />
-            <div class="clearfix"></div>
+        <?php if (empty($languageCode)): ?>
+            <?php if (!empty($entityModel->$fieldLink)): ?>
+                <?php $video = $this->Cf->imageUrl($entityModel->$fieldLink); ?>
+                <a  class="videoUpload" href="<?php echo $video; ?>" class="video-link" style="display: block; margin-bottom: 10px;">
+                    <video width="320" height="240" controls>
+                        <source src="<?php echo $video; ?>" type="video/mp4" />
+                    </video>
+                </a>
+                <input type="hidden" name="<?= $field ?>" value="<?php echo $entityModel->$field; ?>" />
+                <div class="clearfix"></div>
+            <?php endif; ?>
+        <?php else: ?>
+            <?php if (!empty($entityModel->lang[$languageCode][$fieldLink])): ?>
+                <?php $video = $this->Cf->imageUrl($entityModel->lang[$languageCode][$fieldLink]); ?>
+                <a  class="videoUpload" href="<?php echo $video; ?>" class="video-link" style="display: block; margin-bottom: 10px;">
+                    <video width="320" height="240" controls>
+                        <source src="<?php echo $video; ?>" type="video/mp4" />
+                    </video>
+                </a>
+                <input type="hidden" name="<?= $field ?>" value="<?php echo $entityModel->lang[$languageCode][$nameField]; ?>" />
+                <div class="clearfix"></div>
+            <?php endif; ?>
         <?php endif; ?>
         <div class="input-group">
-            <input value="<?= $value ?>" data-type="video" name="<?= $field . '_upload' ?>" type="file" class="form-control" placeholder="<?= !empty($placehoder) ? $placehoder : $label ?>" <?= !empty($error) ? 'required' : '' ?>>
+            <?php $field = !empty($languageCode) ? str_replace(']', '_upload]', $field) : $field . '_upload' ?>
+            <input value="<?= $value ?>" data-type="video" name="<?= $field ?>" type="file" class="form-control" placeholder="<?= !empty($placehoder) ? $placehoder : $label ?>" <?= !empty($error) ? 'required' : '' ?>>
             <?php if (!empty($error)) : ?>
                 <div class="invalid-feedback">
                     <?= implode('<br />', $error); ?>

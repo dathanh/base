@@ -30,6 +30,11 @@ trait CommandService {
                 unset($submitField[$nameField]['isIndex']);
                 unset($submitField[$nameField]['isView']);
                 unset($submitField[$nameField]['isMultiLang']);
+                //create image field
+                if (!empty($optionField) && $optionField['type'] == 'image') {
+                    $isUpload = true;
+                    $imageField[$nameField] = $submitField[$nameField];
+                }
             }
             //create multi language field
             if (!empty($optionField) && $optionField['isMultiLang']) {
@@ -39,20 +44,8 @@ trait CommandService {
                 unset($multiLangField[$nameField]['isMultiLang']);
                 if (!empty($optionField) && $optionField['type'] == 'image') {
                     $isUpload = true;
-                    $imageMultiLangField[$nameField] = $optionField;
-                    unset($imageMultiLangField[$nameField]['isIndex']);
-                    unset($imageMultiLangField[$nameField]['isView']);
-                    unset($imageMultiLangField[$nameField]['isMultiLang']);
+                    $imageMultiLangField[$nameField] = $multiLangField[$nameField];
                 }
-            }
-
-            //create image field
-            if (!empty($optionField) && $optionField['type'] == 'image') {
-                $isUpload = true;
-                $imageField[$nameField] = $optionField;
-                unset($imageField[$nameField]['isIndex']);
-                unset($imageField[$nameField]['isView']);
-                unset($imageField[$nameField]['isMultiLang']);
             }
         }
 

@@ -29,7 +29,9 @@
                                             <?php $fieldEditor = true; ?>
                                         <?php endif; ?>
                                         <?=
-                                        $this->element('/input/' . $input['type'], ['field' => $field,
+                                        $this->element('/input/' . $input['type'], [
+                                            'nameField' => $field,
+                                            'field' => $field,
                                             'label' => $input['label'],
                                             'error' => !empty($errors[$field]) ? $errors[$field] : '',
                                             'value' => !empty($entityModel->$field) ? $entityModel->$field : '',
@@ -59,11 +61,14 @@
                                                                     <?php $fieldEditor = true; ?>
                                                                 <?php endif; ?>
                                                                 <?=
-                                                                $this->element('/input/' . $input['type'], ['field' => $languageCode . "[$field]",
+                                                                $this->element('/input/' . $input['type'], [
+                                                                    'nameField' => $field,
+                                                                    'field' => $languageCode . "[$field]",
                                                                     'label' => $input['label'] . ' - ' . $languageCode,
                                                                     'error' => !empty($errors[$languageCode][$field]) ? $errors[$languageCode][$field] : '',
                                                                     'value' => !empty($entityModel->lang[$languageCode]) ? $entityModel->lang[$languageCode][$field] : '',
                                                                     'entityModel' => !empty($entityModel) ? $entityModel : '',
+                                                                    'languageCode' => !empty($languageCode) ? $languageCode : '',
                                                                     'custom' => !empty($input['custom']) ? $input['custom'] : '',
                                                                     'require' => !empty($input['require']) ? $input['require'] : false,
                                                                 ])

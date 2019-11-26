@@ -20,13 +20,22 @@ class {{singleName}} extends EntityTranslate {
     {% if not(imageField is empty) %}
     protected $_virtual = [
         {% for nameField,option in imageField %}
+            'link{{nameField|capitalize}}',
+        {% endfor %}
+    ];
+    {% endif %}
+    
+    {% if not(imageMultiLangField is empty) %}
+    protected $imageMultiLangField = [
+        {% for nameField,option in imageMultiLangField %}
            '{{nameField}}',
         {% endfor %}
     ];
     {% endif %}
+    
     {% if not(imageField is empty) %}
         {% for nameField,option in imageField %}
-        protected function _getLink{{nameField}}() {
+        protected function _getLink{{nameField|capitalize}}() {
             return Configure::read('LinkStatic.UploadFolder') . '{{pluralName}}/' . $this->{{nameField}};
         }
         {% endfor %}

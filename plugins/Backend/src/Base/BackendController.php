@@ -211,7 +211,6 @@ class BackendController extends BaseController {
         $tableObject = $this->tableName;
         $fieldsSubmit = $this->prepareFieldsSubmit($this->fieldsSubmit);
         $entityModel = $this->prepareObject($id);
-
         $errors = [];
         $this->pushData($tableObject, $entityModel, $errors);
 
@@ -308,6 +307,24 @@ class BackendController extends BaseController {
             }
 
             $objectTranslateSave = $translateObject->patchEntity($translateData, $dataSave);
+
+            foreach ($this->multiLangFieldSubmit as $field => $input) {
+                if (!empty($input['type']) && ($input['type'] == 'checkbox')) {
+                    $objectTranslateSave->$field = !empty($dataSave[$field]) ? ACTIVE : INACTIVE;
+                }
+                if (!empty($input['type']) && ($input['type'] == 'multiple_image')) {
+                    if (!empty($dataSave[$field])) {
+                        $fieldUploaded = 'gallery' . Inflector::camelize($field);
+                        $objectTranslateSave->$field = json_encode($dataSave[$field], true);
+                        $objectTranslateSave->$fieldUploaded = !empty($dataSave[$field]) ? json_encode($dataSave[$field], true) : '[]';
+                    }
+                }
+                if (!empty($input['type']) && ( in_array($input['type'], $this->inputUpload) )) {
+                    $this->processUploadFile($field, $objectTranslateSave, $this->tableName . '/', $languageCode);
+                }
+            }
+
+
             if (!$translateObject->save($objectTranslateSave)) {
                 $errors = $objectTranslateSave->getErrors();
                 foreach ($errors as $fieldError => $value) {

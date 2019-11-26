@@ -26,6 +26,22 @@ return [
                     'isMultiLang' => false,
                     'format' => ''
                 ],
+                'test' => [
+                    'label' => 'TEst',
+                    'type' => 'text',
+                    'isIndex' => true,
+                    'isView' => true,
+                    'isMultiLang' => false,
+                    'format' => ''
+                ],
+                'thumbnail' => [
+                    'label' => 'Thumbnail',
+                    'type' => 'image',
+                    'isIndex' => true,
+                    'isView' => true,
+                    'isMultiLang' => false,
+                    'format' => ''
+                ],
                 'location' => [
                     'label' => 'Location',
                     'type' => 'editor',
@@ -67,6 +83,22 @@ return [
                     'isIndex' => true,
                     'isView' => true,
                     'isMultiLang' => false,
+                    'format' => ''
+                ],
+                'thumbnail' => [
+                    'label' => 'Thumbnail',
+                    'type' => 'image',
+                    'isIndex' => true,
+                    'isView' => true,
+                    'isMultiLang' => false,
+                    'format' => ''
+                ],
+                'banner' => [
+                    'label' => 'Banner',
+                    'type' => 'image',
+                    'isIndex' => false,
+                    'isView' => true,
+                    'isMultiLang' => true,
                     'format' => ''
                 ],
                 'name' => [

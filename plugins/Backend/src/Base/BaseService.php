@@ -8,14 +8,20 @@ use Cake\Utility\Inflector;
 
 trait BaseService {
 
-    protected function processUploadFile($field, $entity, $dir) {
+    protected function processUploadFile($field, $entity, $dir, $languageCode = '') {
         $desPath = Configure::read('Upload.UploadFolder');
         $fileDir = $desPath . $dir;
         Utils::useComponents($this, ['Backend.AdminCommon']);
-        $fileName = $this->AdminCommon->uploadFile($this->request->getData($field . '_upload'), $fileDir);
-
+        $data = $this->request->getData();
+        if (!empty($languageCode)) {
+            $fileName = $this->AdminCommon->uploadFile($data[$languageCode][$field . '_upload'], $fileDir);
+            $infoSubmit = $data[$languageCode][$field . '_upload'];
+        } else {
+            $fileName = $this->AdminCommon->uploadFile($data[$field . '_upload'], $fileDir);
+            $infoSubmit = $data[$field . '_upload'];
+        }
         $originalImage = $entity->$field;
-        if ((!empty($_FILES[$field . '_upload']['name']) && !empty($fileName)) || (empty($fileName) && !empty($entity->$field))) {
+        if ((!empty($infoSubmit['name']) && !empty($fileName)) || (empty($fileName) && !empty($entity->$field))) {
             if (!empty($fileName)) {
                 $entity->$field = $fileName;
                 $linkFile = 'link' . Inflector::camelize($field);

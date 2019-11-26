@@ -11,7 +11,7 @@ use Cake\Validation\Validation;
 use Cake\Event\Event;
 use Backend\Model\Entity\{{singleName}};
 use Sluggable\Utility\Slug;
-use App\Utility\Utils;
+use Backend\Utility\Utils;
 
 class {{pluralName}}Table extends Table {
 
@@ -92,7 +92,7 @@ class {{pluralName}}Table extends Table {
             ${{underSName}}Translate = array_unique(${{underSName}}Translate);
             return $query->where(['{{pluralName}}.id IN' => ${{underSName}}Translate]);
         } else {
-            return $query->where(['{{pluralName}}.id' => '#']);
+            return $query->where(['{{pluralName}}.id' => 0]);
         }
     }
     {% else %}

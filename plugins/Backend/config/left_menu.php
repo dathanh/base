@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'LeftMenu' => [
+'LeftMenu' => [
         ['name' => 'Admin'
         ],
         [
@@ -44,62 +44,63 @@ return [
         ],
         ['name' => 'Page'
         ],
-        [
-            'name' => 'Careers',
-            'index' => 3,
-            "controller" => "Careers",
-            'action' => 'index',
-            'icon' => 'la la-plus',
-            'subMenu' => [
-                [
-                    'name' => 'List Careers',
+                                     [
+                    'name' => 'Careers',
+                    'index' => 3,
                     "controller" => "Careers",
                     'action' => 'index',
+                    'icon' => 'la la-plus',
+                    'subMenu' => [
+                        [
+                            'name' => 'List Careers',
+                            "controller" => "Careers",
+                            'action' => 'index',
+                        ],
+                        [
+                            'name' => 'Add Careers',
+                            "controller" => "Careers",
+                            'action' => 'add',
+                        ]
+                    ]
                 ],
-                [
-                    'name' => 'Add Careers',
-                    "controller" => "Careers",
-                    'action' => 'add',
-                ]
-            ]
-        ],
-        [
-            'name' => 'Contacts',
-            'index' => 3,
-            "controller" => "Contacts",
-            'action' => 'index',
-            'icon' => 'la la-plus',
-            'subMenu' => [
-                [
-                    'name' => 'List Contacts',
+                             [
+                    'name' => 'Contacts',
+                    'index' => 3,
                     "controller" => "Contacts",
                     'action' => 'index',
+                    'icon' => 'la la-plus',
+                    'subMenu' => [
+                        [
+                            'name' => 'List Contacts',
+                            "controller" => "Contacts",
+                            'action' => 'index',
+                        ],
+                        [
+                            'name' => 'Add Contacts',
+                            "controller" => "Contacts",
+                            'action' => 'add',
+                        ]
+                    ]
                 ],
-                [
-                    'name' => 'Add Contacts',
-                    "controller" => "Contacts",
-                    'action' => 'add',
-                ]
-            ]
-        ],
-        [
-            'name' => 'Feedbacks',
-            'index' => 3,
-            "controller" => "Feedbacks",
-            'action' => 'index',
-            'icon' => 'la la-plus',
-            'subMenu' => [
-                [
-                    'name' => 'List Feedbacks',
+                             [
+                    'name' => 'Feedbacks',
+                    'index' => 3,
                     "controller" => "Feedbacks",
                     'action' => 'index',
+                    'icon' => 'la la-plus',
+                    'subMenu' => [
+                        [
+                            'name' => 'List Feedbacks',
+                            "controller" => "Feedbacks",
+                            'action' => 'index',
+                        ],
+                        [
+                            'name' => 'Add Feedbacks',
+                            "controller" => "Feedbacks",
+                            'action' => 'add',
+                        ]
+                    ]
                 ],
-                [
-                    'name' => 'Add Feedbacks',
-                    "controller" => "Feedbacks",
-                    'action' => 'add',
-                ]
+              
             ]
-        ],
-    ]
 ];
