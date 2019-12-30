@@ -13,10 +13,9 @@ class Create{{pluralName}} extends AbstractMigration
     public function change()
     {
         $table = $this->table('{{underPName}}');
-        
+
         {% if not(data is empty) %}
             {% for nameField,option in data %}
-                
                     {% set type = 'string' %}
                     {% set limit = '500' %}
                     {% set default = 'null' %}
@@ -41,7 +40,6 @@ class Create{{pluralName}} extends AbstractMigration
                     {% set limit = '500' %}
                     {% set default = 'null' %}
                 {% endif %}
-                
             $table->addColumn('{{nameField}}', '{{type}}', [
                 'default' => {{default}},
                 {% if not(limit is empty) %}
@@ -49,30 +47,33 @@ class Create{{pluralName}} extends AbstractMigration
                 {% endif %}
                 'null' => true,
             ]);
+
             {% endfor %}
             {% if template == 'multiLang' and not(multiLangField is empty) %}
                 $table->addColumn('language_code', 'string', [
                     'default' => null,
                     'limit' => 5,
                     'null' => false,
-                 ]);    
+                 ]);
+
                 $table->addColumn('{{underSName}}_id', 'integer', [
                     'default' => 0,
                     'limit' => 10,
                     'null' => false,        
                 ]);
             {% endif %}
-            
-            
+
             $table->addColumn('created', 'datetime', [
                 'default' => null,
                 'null' => false,
             ]);
+
             $table->addColumn('modified', 'datetime', [
                 'default' => null,
                 'null' => false,
             ]);
         {% endif %}
+
         $table->create();
     }
 }

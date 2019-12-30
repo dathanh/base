@@ -1,0 +1,5 @@
+CreateController : bin/cake create_controller,
+CreateDatabase : bin/cake create_database,
+CreateMenu : bin/cake create_menu,
+CreateTable : bin/cake create_table,
+RunServer : bin/cake server,
